@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Tarefas 1.0 Thiago</title>
+
+    <!-- Bootstrap início -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <!-- Bootstrap fim -->
+    
+    
+       
+    
+        
+      
+    
+<!--CSS=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+-->
+    <style>
+        #listaRegistros{ display: none; }
+        #cadastroRegistro{
+            display: none;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        body[page=lista] #listaRegistros{ display: block; }
+        body[page=cadastro] #cadastroRegistro{ display: flex; }
+
+        body{
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 20px;
+            text-align: center;
+            
+        }
+/*TRATAMNETO DA BORDA PEINCIPAL TEMA---------------------------------------*/
+        fieldset{
+            border-radius: 10px;
+            border: solid 5px rgb(0, 21, 112);
+            color: #a00;
+            font-size: 26px;
+            
+
+        }
+/*TRATAMNETO DA TABELA INTERIRA HTML---------------------------------------*/
+        table{
+            width: 100%;
+            border-collapse: collapse;
+        }
+/*TRATAMNETO INTERNO DA TABELA TD E TH ESPECIFICO -------------------------*/        
+        table td{
+            font-size: 18px;
+            padding: 10px 15px;
+            border: solid 3px rgb(0, 48, 68);
+            border-radius: 5px;
+            color:rgb(1, 6, 49);
+        }
+
+        table th{
+            font-size: 25px;
+            padding: 10px 15px;
+            border: solid 3px rgb(0, 48, 68);
+            background-color: #07A;
+            color: #fff;
+            
+        }
+/*TRATAMNETO DOS BOTOES---------------------------------------------------*/
+        button{
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            background-color: #07a;
+            color: #fff;
+            margin: 3px;
+            padding: 10px 50px;
+            font-size: 15px;
+            
+        }
+        button.cinza{
+            background-color: #ccc;
+            color: #666;
+        }
+        button.vermelho{
+            background-color: #a00;
+        }
+        button:hover{
+            opacity: .5;
+        }
+/*TRATAMNETO DAS CAIXAS DE TEXTO INPUT'S------------------------------------*/
+        input{
+            border: solid 3px rgb(0, 48, 68);
+            border-radius: 5px;
+            padding: 5px;
+            font-size: 20px;
+            
+        }
+
+        .label>div{
+            display: flex;
+        }
+        .label>div>input{
+            flex: 1;
+        }
+       
+    </style>
+    <!--HTML=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+-->    
+
+</head>
+<body page='lista'>
+
+    <nav class=" navbar navbar-expand-lg navbar-dark bg-primary mb-10">
+        <div class="container">
+          <a class="navbar-brand" href="#">
+             <img src="logo.png" width="35" height="35" alt="Orçamento pessoal">
+          </a>
+          
+  
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto" >
+              <li class="nav-item active ">
+                <a style="font-size:large;" class="nav-link " href="index.html">Cadastro</a>
+              </li>
+              <li class="nav-item">
+                <a style="font-size:large;" class="nav-link" href="consulta.html">Consultar</a>
+              </li>
+              <li class="nav-item">
+                <a style="font-size:large;" class="nav-link" href="Visualizar.html">Visualizar</a>
+              </li>
+              <li class="nav-item">
+                <a style="font-size:large;" class="nav-link" href="Agenda.html">Tarefas/Agenda</a>
+              </li>
+            </ul>
+            
+          </div>
+        </div>
+      </nav>
+   
+    
+    <div id='listaRegistros'>
+         <button onclick="vizualizar('cadastro', true)"  id="principal" style="font-size: 20px; align-items: center;padding: 10px 50px;text-justify: distribute-all-lines;"><b>(+) Adicionar Nova Tarefa</b></button>
+
+        <div style='display: flex;'>
+            <input style='flex:1' placeholder="PESQUISAR" autofocus id='inputPesquisa' />
+        </div>
+        <br>
+<!--TRATAMENTO DE TABELAS---------------------------------->
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Data</th>
+                    <th>Tarefas</th>
+                    <th>Departamento</th>
+                    <th>Situação</th>
+                    <th>Status</th>
+                    <th style="color: rgb(0, 0, 0);background-color: rgb(199, 143, 1);">Menu</th>
+                
+                </tr>
+            </thead>
+            <tbody id='listaRegistrosBody'></tbody>
+        </table>
+    </div>
+<!--REGISTRO CADASTRO ESSA E A PÁGINA DE ADICIONAR INFORMAÇÕES----------------------------->
+    <form id='cadastroRegistro'>
+        <b>Adicionar Tarefas na Agenda</b>
+
+        <div class='label'>
+            <div style="padding: 5px;">ID: </div>
+            <div>
+                <input type='number'placeholder="O ID e gerado Automatico" readonly id='id' />
+            </div>
+        </div>
+
+        <div class='label'>
+            <div style="padding: 5px;">Data: </div>
+            <div>
+                <input type="date" id='dia'  style="padding: 25px;" />
+            </div>
+        </div>
+
+        <div class='label'>
+            <div style="padding: 5px;">Tarefas: </div>
+            <div><br>
+                <input id='tarefas' placeholder="ADICIONE AQUI as suas tarefas" style="padding: 25px;" />
+            </div>
+        </div>
+ <!--DATA LIST PARA OPÇÕES DE DEPARTAMENTOS----------------------------->       
+            <datalist id="listasDepartamentos">
+                <OPtion>Engenharia</OPtion>
+                <OPtion>ADM</OPtion>
+                <OPtion>Compras</OPtion>
+                <OPtion>Financeiro</OPtion>
+                <OPtion>Locação</OPtion>
+                <OPtion>Estadual</OPtion>
+            </datalist>         
+<!--DATA LIST PARA OPÇÕES DE DEPARTAMENTOS-----------------------------> 
+        <div class='label'>
+            <div style="padding: 5px;">Departamento: </div>
+            <div>
+                <input type="text" list="listasDepartamentos" id='departamento' placeholder="ADM, Engenharia, RH,Locação, Manutenção, ETC..." style="padding: 25px;" />
+            </div>
+        </div>
+
+        <div class='label'>
+            <div style="padding: 5px;">Situação: </div>
+            <div><br>
+                <input id='situacao' placeholder=" Digite a aqui qual e a situação do processo" style="padding: 25px;" />
+            </div>
+        </div>
+            
+<!--DATA LIST PARA OPÇÕES DE STATUS----------------------------->
+                <datalist id="listaStatus">
+                    <OPtion>Em Andamento (Inicio)</OPtion>
+                    <OPtion>30% (Em Andamento)</OPtion>
+                    <OPtion>50% (Em Andamento)</OPtion>
+                    <OPtion>80% (Em Andamento)</OPtion>
+                    <OPtion>95% (Em Andamento)</OPtion>
+                    <OPtion>Autorização Estadual</OPtion>
+                    <OPtion>Processo Parado</OPtion>
+                    <OPtion>Atrasado (Verificar)</OPtion>
+                </datalist> 
+<!--DATA LIST PARA OPÇÕES DE STATUS----------------------------->
+
+        <div class='label'>
+            <div style="padding: 5px;">Status: </div>
+            <div>
+                <input  type="text" list="listaStatus" id='status'  placeholder=" Escolha uma Opção" style="padding: 10px;" />
+                </div>
+            </div>
+        </div>
+
+        </fieldset>        
+
+        <div>
+            <button onclick="window.location.reload()">Salvar</button>
+            <button onclick="vizualizar('lista'), window.location.reload()" class="cinza" type='button'>Cancelar</button>
+        </div>
+
+    </form>
+
+</body>
+    <audio src="musicas/Vangelis - Memories Of Blue.mp3" controls="controls" loop ></audio>
+</html>
+
+
+<!--FUNÇÕES DO JAVASCRIPT=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+-->
+
+<script>
+    const KEY_BD = '@usuariosestudo'
+
+    //VARIAVEIS PARA GUARDAR ARGUMENTOS-------------------------------------------------
+    var listaRegistros = {
+        ultimoIdGerado:0,
+        usuarios:[]
+    }
+
+    //VARIAVEL PARA FILTRO -------------------------------------------------------------
+    var FILTRO = ''
+
+    //CODIGO PARA GRAVAR NO LOCAL STORAGE-----------------------------------------------
+    function gravarBD(){
+        localStorage.setItem(KEY_BD, JSON.stringify(listaRegistros) )
+    }
+
+    //FUNÇÃO LEITURA DO LOCAL STORAGE E MOSTRAR NO APLICATIVO OU SEJA ESPELHAR----------
+    function lerBD(){
+        const data = localStorage.getItem(KEY_BD)
+        if(data){
+            listaRegistros = JSON.parse(data)
+        }
+        desenhar()
+    }
+
+    //FUNÇÃO PARA PESQUISAR--------------------------------------------------------------
+    function pesquisar(value){
+        FILTRO = value;
+        desenhar()
+    }
+
+
+    function desenhar(){
+        const tbody = document.getElementById('listaRegistrosBody')
+        if(tbody){
+            var data = listaRegistros.usuarios;
+            if(FILTRO.trim()){
+                const expReg = eval(`/${FILTRO.trim().replace(/[^\d\w]+/g,'.*')}/i`)
+                data = data.filter( usuario => {
+                    return expReg.test( usuario.dia ) || expReg.test( usuario.tarefas ) || expReg.test( usuario.departamento ) || expReg.test( usuario.situacao ) || expReg.test( usuario.status )
+                } )
+            }
+            //CODIGO PARA ORDEM ALFABETICA---------------------------------------------------
+            data = data
+                .sort( (a, b) => {
+                    return a.nome < b.nome ? -1 : 1
+                })
+                .map( usuario => {
+                    return `<tr>
+                            <td>${usuario.id}</td>
+                            <td>${usuario.dia}</td>
+                            <td>${usuario.tarefas}</td>
+                            <td>${usuario.departamento}</td>
+                            <td>${usuario.situacao}</td>
+                            <td>${usuario.status}</td>
+                            <td>
+                                <button onclick='vizualizar("cadastro",false,${usuario.id})'>Editar</button>
+                                <button class='vermelho' onclick='perguntarSeDeleta(${usuario.id})'>Deletar</button>
+                            </td>
+                            </tr>`
+                } )
+                tbody.innerHTML = data.join('')
+        }
+    }
+//o id aqui não pode tirar
+    function insertUsuario( dia,tarefas, departamento, situacao, status){
+        const id = listaRegistros.ultimoIdGerado + 1;
+        listaRegistros.ultimoIdGerado = id;
+        listaRegistros.usuarios.push({
+           id, dia, tarefas, departamento, situacao, status
+        })
+        gravarBD()
+        desenhar()
+        vizualizar('lista')
+    }
+
+    function editUsuario(id, dia, tarefas, departamento, situacao, status){
+        var usuario = listaRegistros.usuarios.find( usuario => usuario.id == id )
+        usuario.id = id;
+        usuario.dia = dia;
+        usuario.tarefas = tarefas;
+        usuario.departamento = departamento;
+        usuario.situacao = situacao;
+        usuario.status = status;
+        gravarBD()
+        desenhar()
+        vizualizar('lista')
+    }
+
+    function deleteUsuario(id){
+        listaRegistros.usuarios = listaRegistros.usuarios.filter( usuario => {
+            return usuario.id != id
+        } )
+        gravarBD()
+        desenhar()
+    }
+
+    function perguntarSeDeleta(id){
+        if(confirm('Quer deletar o registro de id '+ id)){
+            deleteUsuario(id)
+        }
+    }
+
+
+    function limparEdicao(){
+        document.getElementById('id').value=''
+        document.getElementById('dia').value = ''
+        document.getElementById('tarefas').value = ''
+        document.getElementById('departamento').value = ''
+        document.getElementById('situacao').value = ''
+        document.getElementById('status').value = ''
+    }
+
+    function vizualizar(pagina, novo=false, id=null){
+        document.body.setAttribute('page',pagina)
+        if(pagina === 'cadastro'){
+            if(novo) limparEdicao()
+            if(id){
+                const usuario = listaRegistros.usuarios.find( usuario => usuario.id == id )
+                if(usuario){
+                    document.getElementById('id').value = usuario.id
+                    document.getElementById('dia').value = usuario.dia
+                    document.getElementById('tarefas').value = usuario.tarefas
+                    document.getElementById('departamento').value = usuario.departamento
+                    document.getElementById('situacao').value = usuario.situacao
+                    document.getElementById('status').value = usuario.status
+                }
+            }
+            document.getElementById('tarefas').focus()
+        }
+    }
+
+
+
+    function submeter(e){
+        e.preventDefault()
+        const data = {
+            id: document.getElementById('id').value,
+            dia: document.getElementById('dia').value,
+            tarefas: document.getElementById('tarefas').value,
+            departamento: document.getElementById('departamento').value,
+            situacao: document.getElementById('situacao').value,
+            status: document.getElementById('status').value,
+        }
+        if(data.id){
+            editUsuario(data.id,data.dia, data.tarefas, data.departamento, data.situacao, data.status)
+        }else{
+            insertUsuario(data.dia, data.tarefas, data.departamento, data.situacao, data.status )
+        }
+    }
+
+
+    window.addEventListener('load', () => {
+        lerBD()
+        document.getElementById('cadastroRegistro').addEventListener('submit', submeter)
+        document.getElementById('inputPesquisa').addEventListener('keyup', e => {
+            pesquisar(e.target.value)
+        })
+
+    })
+
+</script>

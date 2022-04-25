@@ -1,0 +1,191 @@
+<html>
+	<head>
+    <meta charset="utf-8" />
+		<title>Organizador de C.I Thiago</title>
+
+		<!-- Bootstrap início -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <!-- Bootstrap fim -->
+
+    <!-- iconic -->
+    <link href="/open-iconic/font/css/open-iconic-bootstrap.css" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+    <script src="app.js"></script>
+   
+
+	</head>
+
+  <body style="background-color: rgba(248, 224, 157, 0.856);" onload="carregaListaDespesas()">
+
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-3">
+      <div class="container">
+        <a class="navbar-brand" href="#">
+           <img src="pesquisa.png" width="35" height="35" alt="Orçamento pessoal">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a style="font-size:large;" class="nav-link" href="index.html">Cadastro</a>
+            </li>
+            <li class="nav-item active">
+              <a style="font-size:large;" class="nav-link" href="consulta.html">Consultar</a>
+            </li>
+            <li class="nav-item ">
+              <a style="font-size:large;" class="nav-link" href="Visualizar.html">Visualizar</a>
+            </li>
+            <li class="nav-item">
+              <a style="font-size:large;" class="nav-link" href="Agenda.html">Tarefas/Agenda</a>
+            </li>
+          </ul>
+          
+        </div>
+      </div>
+    </nav>
+
+    <div class="container">
+      <div class="row mb-2">
+        <div class="col">
+          <h1 class="display-4" style="color: brown;">Consulta de Pedidos</h1>
+          
+        </div>
+      </div>
+
+      <div class="row mb-2">
+        <div class="col-md-2">
+          <select class="form-control" id="ano">
+            <option value="">Ano</option>
+            <option value="2020">2020</option>
+            <option value="2021">2021</option>
+            <option value="2022">2022</option>
+            <option value="2023">2023</option>
+            <option value="2024">2024</option>
+            <option value="2025">2025</option>
+
+          </select>
+        </div>
+
+        <div class="col-md-2">
+          <select class="form-control" id="mes">
+            <option value="">Mês</option>
+            <option value="01">Janeiro</option>
+            <option value="02">Fevereiro</option>
+            <option value="03">Março</option>
+            <option value="04">Abril</option>
+            <option value="05">Maio</option>
+            <option value="06">Junho</option>
+            <option value="07">Julho</option>
+            <option value="08">Agosto</option>
+            <option value="09">Setembro</option>
+            <option value="10">Outubro</option>
+            <option value="11">Novembro</option>
+            <option value="12">Dezembro</option>
+          </select>
+        </div>
+        
+        <div class="col-md-2">
+          <input type="text" class="form-control" placeholder="Dia" id="dia" />
+        </div>
+
+        <div class="col-md-6">
+          <select class="form-control" id="pedidos">
+            <option value="">Pedidos</option>
+            <option value="1">ADM</option>
+            <option value="2">Engenharia</option>
+            <option value="3">Prefeitura</option>
+            <option value="4">Locação</option>
+            <option value="5">Secretaria</option>
+            <option value="6">Veiculos</option>
+            <option value="7">Compras</option>
+            <option value="8">Diretoria</option>
+            <option value="9">TV</option>
+            <option value="10">Rádio</option>
+            <option value="11">SGA/Consumo</option>
+            <option value="12">Estadual</option>
+            <option value="13">Patrimonio</option>
+            <option value="14">DTI</option>
+            <option value="15">RH</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row  mb-5">
+        <div class="col-md-8">
+          <input type="text"class="form-control" placeholder="Descrição" id="descricao" />
+        </div>
+
+        <div class="col-md-2">
+          <input type="text" class="form-control" placeholder="Codigo C.I" id="CodigoCI" />
+        </div>
+
+        <div class="col-md-2">
+          <input type="number" class="form-control" placeholder="Qtdade de Itens" id="qtdItens" />
+        </div>
+
+        <div class="col-md-2 justify-content-end" style="margin-top: 8px;">
+          <input type="text" class="form-control" placeholder="Valor Total Orçado" id="valor" />
+        </div>
+
+        <div class="col-md-0 d-flex justify-content-end" style="margin-top: 8px; margin-left: 10px;">
+          <button type="button" class="btn btn-primary" onclick="pesquisarDespesa()">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+      </div>
+
+      
+
+      <div class="row mb-1 d-flex justify-content-end">
+        <div class="col">
+          <table class="table table-success table-hover" border="2" style="border-radius: 2px; background-color:rgba(43, 43, 43, 0.795) ;" >
+          <tr>
+            <td>
+              <h5 id="IdValor" style="text-align: center; color: azure; padding: 0.1px;">Valor Total acumulado</h5>
+          <input id="valorTotal" style="font-weight: bold;padding: 0.1px;  text-align: center; color: dodgerblue;" disabled class="form-control" placeholder="Total" type="text"/>
+          </td>
+        </tr>
+        </table>
+        </div>
+      </div>
+
+      
+
+      <div class="row" >
+        <div class="col">
+          <table border="4" class="table table-hover table-striped table-success table bordered" style="text-align: justify;" >
+            <thead  style="background-color:rgba(43, 43, 43, 0.795); color: azure; border-color: rgb(255, 255, 255);">
+              <tr>
+                <th>Data</th>
+                <th>Pedidos</th>
+                <th>Descrição</th>
+                <th>Codigo C.I</th>
+                <th>Qt Itens</th>
+                <th>Valor Total</th>
+                <th>
+                  <h6 style="text-align: justify;font-weight: bold;text-justify:auto; color: rgb(255, 158, 158);" class="lead" id="contador">0 Cadastro.</h6>
+                </th>
+              </tr>
+            </thead>
+
+            <tbody id="listaDespesas" style="border-color: azure;">
+               
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    
+  </body>	
+
+</html>

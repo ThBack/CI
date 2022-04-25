@@ -1,0 +1,6 @@
+cirar 
+- o campo numero de intens
+- a multiplicação dos valor com a quantidade de intens
+- botão e página apenas para edição.
+-graficos
+-colocar no xamp
